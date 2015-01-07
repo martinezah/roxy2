@@ -10,11 +10,11 @@ from models import Artifact
 def index(request):
     return redirect('artifacts')
 
-#@login_required
+@login_required
 def artifacts(request):
     return render(request, 'app/artifacts.html', {})
 
-#@login_required
+@login_required
 def data_artifact(request):
     response = {}
     _key = request.GET.get('key')
