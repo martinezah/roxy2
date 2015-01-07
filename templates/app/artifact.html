@@ -2,5 +2,13 @@
 <p>Key: {{key}}</p>
 <p>Page URL: {{url}}</p>
 <p>Crawled: {{timestamp|date:"c"}}</p>
+{% if indices|length %}
+<p>Attributes:</p>
+<ul>
+{% for item in indices %}
+<li>{{item.key}}: {{item.value}}</li>
+{% endfor %} 
+</ul>
+{% endif %}
 <p>HTML:</p>
 <pre>{{response.body.strip}}</pre>
