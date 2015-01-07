@@ -1,0 +1,4 @@
+body { font-family: sans-serif; center; color: white; background-color: #4D72A9; padding-top: 60px; }
+.navbar { background: white; border-bottom: 1px solid #ccc; }
+.spaced { display: inline-block; margin-left: 30px; margin-right: 30px; }
+#wrapper a { color: white; }

@@ -107,3 +107,5 @@ REST_FRAMEWORK = {
     ),
 }
 
+MEMEX_API_URL = os.environ.get('MEMEX_API_URL', '')
+MEMEX_API_TOKEN = os.environ.get('MEMEX_API_TOKEN', '')

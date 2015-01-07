@@ -1,0 +1,6 @@
+<p><a href="#key/{{adjacent.before}}">prev</a><a class="spaced" href="#key/{{key}}">permalink</a>{% if adjacent.after %}<a href="#key/{{adjacent.after}}">next</a>{% endif %}</p>
+<p>Key: {{key}}</p>
+<p>Page URL: {{url}}</p>
+<p>Crawled: {{timestamp|date:"c"}}</p>
+<p>HTML:</p>
+<pre>{{response.body.strip}}</pre>
