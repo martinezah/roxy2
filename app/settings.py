@@ -109,3 +109,5 @@ REST_FRAMEWORK = {
 
 MEMEX_API_URL = os.environ.get('MEMEX_API_URL', '')
 MEMEX_API_TOKEN = os.environ.get('MEMEX_API_TOKEN', '')
+
+LOGIN_URL = os.environ.get('MEMEX_LOGIN_URL', 'auth_login')
