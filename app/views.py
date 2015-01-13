@@ -24,6 +24,9 @@ def data_artifact(request):
         timestamp = response.get('timestamp')
         if timestamp:
             response['timestamp'] = datetime.datetime.fromtimestamp(timestamp/1000.0)
+        imported = response.get('imported')
+        if imported:
+            response['imported'] = datetime.datetime.fromtimestamp(imported/1000.0)
         return render(request, 'app/artifact.html', response)
     else:
         return HttpResponse(json.dumps(response), content_type="application/json")
