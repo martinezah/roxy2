@@ -19,6 +19,9 @@ def artifacts(request):
 def data(request):
     response = {}
     url = request.GET.get('url')
+    query = request.META.get('QUERY_STRING')
+    if query and query.startswith('url='):
+        url = query[4:]
     if url:
         response['data'] = Artifact.get_by_url(url)
     nonce = request.GET.get('nonce')
