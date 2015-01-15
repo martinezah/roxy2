@@ -7,19 +7,31 @@ from django.contrib.auth.decorators import login_required
 import settings
 from models import Artifact
 
+@login_required
 def index(request):
-    return redirect('artifacts')
+    return render(request, 'app/index.html', {})
 
 @login_required
 def artifacts(request):
     return render(request, 'app/artifacts.html', {})
 
 @login_required
+def data(request):
+    response = {}
+    url = request.GET.get('url')
+    if url:
+        response['data'] = Artifact.get_by_url(url)
+    nonce = request.GET.get('nonce')
+    if nonce:
+        response['nonce'] = nonce
+    return HttpResponse(json.dumps(response), content_type="application/json")
+
+@login_required
 def data_artifact(request):
     response = {}
     _key = request.GET.get('key')
     _format = request.GET.get('format', 'json')
-    response = Artifact.get(_key)
+    response = Artifact.get_by_key(_key)
     if _format == 'html':
         timestamp = response.get('timestamp')
         if timestamp:

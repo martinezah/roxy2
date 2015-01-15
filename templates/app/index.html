@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+{% load staticfiles %}
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Memex Data Browser</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet" type="text/css">
+    <link href="{% static 'css/app.css' %}" rel="stylesheet" type="text/css">
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+</head>
+<body ng-app="roxyApp" ng-controller="indexController">
+    <div class="navbar navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
+                <a class="navbar-brand" href="{% url 'index' %}">Memex Data Browser</a>
+            </div>
+            <ul class="nav navbar-nav pull-right">
+            </ul>
+        </div>
+    </div>
+    <div id="wrapper">
+        <div class="container">
+            <div class="row clearfix">
+                <div class="col-xs-12">
+                    {% verbatim %}
+                    <p><input type="text" class="wide" ng-model="query_url" ng-keypress="on_enter_get_artifacts($event)"> <a class="refresh btn btn-primary" ng-click="get_artifacts()">refresh</a></p>
+                    <p>
+                        <a ng-click="prev()" ng-show="item">prev</a>
+                        <span style="display: inline-block; width: 100px; text-align: center;">
+                            <span ng-show="status">{{status}}</span><span ng-show="artifacts.length && !status"><span ng-show="curr">{{curr}}/</span>{{artifacts.length}}</span>
+                        </span>
+                        <a ng-click="next()" ng-show="item">next</a>
+                    </p>
+                    <div ng-show="item">
+                    <p>Key: {{item.key}}</p>
+                    <p>Page URL: <a href="{{item.url}}" target="_blank">{{item.url}}</a></p>
+                    <p>Crawled: {{item.timestamp|date:"medium"}}</p>
+                    <p>Imported: {{item.imported|date:"medium"}}</p>
+                    <p>Attributes:</p>
+                    <ul>
+                    <li ng-repeat="index in item.indices">{{index.key}}: {{index.value}}</li>
+                    </ul>
+                    <p><a ng-click="render()">HTML</a>:</p>
+                    <pre id="html" ng-hide="item.preview">{{item.response.body}}</pre>
+                    <iframe ng-show="item.preview" id="preview"></iframe>
+                    </div>
+                    {% endverbatim %}
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.5/angular.min.js"></script>
+    <script src="{% static 'js/roxy2.js' %}"></script>
+    <script>
+    $(window).on('hashchange', function() {
+        var query_url = window.location.hash.substring(1);
+        if (!query_url || !query_url.length) {
+            query_url = "/artifacts/";
+        }
+        window.scope.query_url = query_url;
+        window.scope.get_artifacts();
+    });
+    $(function() {
+        window.scope.api_url = "{% url 'data' %}";
+        $(window).trigger('hashchange');
+    });
+    </script>
+</body>
+</html>
+
