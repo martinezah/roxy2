@@ -19,14 +19,15 @@ def artifacts(request):
 def data(request):
     response = {}
     url = request.GET.get('url')
-    query = request.META.get('QUERY_STRING')
-    if query and query.startswith('url='):
-        url = query[4:]
-    if url:
-        response['data'] = Artifact.get_by_url(url)
     nonce = request.GET.get('nonce')
     if nonce:
         response['nonce'] = nonce
+    query = request.META.get('QUERY_STRING')
+    if query and not nonce:
+        if query.startswith('url='):
+            url = query[4:]
+    if url:
+        response['data'] = Artifact.get_by_url(url)
     return HttpResponse(json.dumps(response), content_type="application/json")
 
 @login_required
