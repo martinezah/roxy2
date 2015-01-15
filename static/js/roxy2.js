@@ -71,16 +71,10 @@ roxyApp.controller('indexController', ['$scope', '$timeout', function indexContr
     };
 
     $scope.render = function() {
-        if ($scope.item.preview) {
-            $scope.item.preview = false;
-            $("#preview").empty();
-        } else {
-            if ($scope.confirm_preview || window.confirm("Are you sure?")) {
-                $("#preview").css({"height": $("#html").height(), "width": $("#html").width()});
-                $scope.confirm_preview = true;
-                $scope.item.preview = true;
-                $("#preview").contents().find('html').html($scope.item.response.body);
-            }
+        var preview_window = window.open('','preview','height=900,width=1100');
+        if (window.focus) {
+            preview_window.document.write($scope.item.response.body);
+            preview_window.focus();
         }
     };
 }]);
