@@ -10,6 +10,7 @@ roxyApp.controller('indexController', ['$scope', '$timeout', function indexContr
             $scope.status = "Loading...";
             $scope.curr = null;
             $scope.artifacts = [];
+            $scope.item = null;
         });
         $scope.nonce = Math.random().toString(36).replace(/[^a-z0-9]+/g, '').substr(0, 6);
         $.get($scope.api_url, {url:$scope.query_url, nonce:$scope.nonce}, function(response) {
@@ -20,8 +21,10 @@ roxyApp.controller('indexController', ['$scope', '$timeout', function indexContr
                         if ($scope.artifacts.length) {
                             $scope.curr = 1;
                             $scope.get_artifact();
+                            $scope.status = null;
+                        } else {
+                            $scope.status = "No results";
                         }
-                        $scope.status = null;
                     });
                 }
            }
