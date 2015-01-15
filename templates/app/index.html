@@ -25,13 +25,15 @@
             <div class="row clearfix">
                 <div class="col-xs-12">
                     {% verbatim %}
-                    <p><input type="text" class="wide" ng-model="query_url" ng-keypress="on_enter_get_artifacts($event)"> <a class="refresh btn btn-primary" ng-click="get_artifacts()">refresh</a></p>
+                    <p><input type="text" class="wide" ng-model="query_url" ng-keypress="on_enter_update_location_hash($event)"> <a class="refresh btn btn-primary" ng-click="update_location_hash()">refresh</a></p>
                     <p>
+                        <a ng-click="first()" ng-show="item">first</a>
                         <a ng-click="prev()" ng-show="item">prev</a>
                         <span style="display: inline-block; width: 100px; text-align: center;">
                             <span ng-show="status">{{status}}</span><span ng-show="artifacts.length && !status"><span ng-show="curr">{{curr}}/</span>{{artifacts.length}}</span>
                         </span>
                         <a ng-click="next()" ng-show="item">next</a>
+                        <a ng-click="last()" ng-show="item">last</a>
                     </p>
                     <div ng-show="item">
                     <p>Key: {{item.key}}</p>
@@ -56,10 +58,11 @@
     $(window).on('hashchange', function() {
         var query_url = window.location.hash.substring(1);
         if (!query_url || !query_url.length) {
-            query_url = "/artifacts/";
+            window.location.hash = "/artifacts/";
+        } else {
+            window.scope.query_url = query_url;
+            window.scope.get_artifacts();
         }
-        window.scope.query_url = query_url;
-        window.scope.get_artifacts();
     });
     $(function() {
         window.scope.api_url = "{% url 'data' %}";

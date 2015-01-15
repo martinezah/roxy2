@@ -31,9 +31,17 @@ roxyApp.controller('indexController', ['$scope', '$timeout', function indexContr
         });
     };
 
-    $scope.on_enter_get_artifacts = function($event) {
-        if ($event.keyCode == 13) {
+    $scope.update_location_hash = function() {
+        if (window.location.hash.substring(1) == $scope.query_url) {
             $scope.get_artifacts();
+        } else {
+            window.location.hash = $scope.query_url;
+        }
+    };
+
+    $scope.on_enter_update_location_hash = function($event) {
+        if ($event.keyCode == 13) {
+            $scope.update_location_hash();
         }
     }
 
@@ -57,6 +65,16 @@ roxyApp.controller('indexController', ['$scope', '$timeout', function indexContr
                 }
             });    
         }
+    };
+
+    $scope.first = function() {
+        $scope.curr = 1;
+        $scope.get_artifact();
+    };
+
+    $scope.last = function() {
+        $scope.curr = $scope.artifacts.length;
+        $scope.get_artifact();
     };
 
     $scope.prev = function() {
