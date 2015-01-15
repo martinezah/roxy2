@@ -45,7 +45,8 @@
                     <li ng-repeat="index in item.indices">{{index.key}}: {{index.value}}</li>
                     </ul>
                     <p><a ng-click="render()">HTML</a>:</p>
-                    <pre>{{item.response.body}}</pre>
+                    <pre ng-hide="item.preview" id="html">{{item.response.body}}</pre>
+                    <iframe ng-show="item.preview" id="preview"></iframe>
                     </div>
                     {% endverbatim %}
                 </div>
