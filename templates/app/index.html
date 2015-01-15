@@ -25,7 +25,7 @@
             <div class="row clearfix">
                 <div class="col-xs-12">
                     {% verbatim %}
-                    <p><input type="text" class="wide" ng-model="query_url" ng-keypress="on_enter_update_location_hash($event)"> <a class="refresh btn btn-primary" ng-click="update_location_hash()">refresh</a></p>
+                    <p><input type="text" class="wide" ng-model="query_url" ng-keypress="on_enter_update_location_hash($event)"> <a class="refresh btn btn-primary" ng-click="update_location_hash()">refresh</a> <a href="{{api_url}}?url={{query_url}}" class="btn" target="_blank"><span class="glyphicon glyphicon-download"></span></a></p>
                     <p>
                         <a ng-click="first()" ng-show="item">first</a>
                         <a ng-click="prev()" ng-show="item">prev</a>
@@ -38,6 +38,7 @@
                     <div ng-show="item">
                     <p>Key: {{item.key}}</p>
                     <p>Page URL: <a href="{{item.url}}" target="_blank">{{item.url}}</a></p>
+                    <p>JSON: <a href="{{api_url}}?url=/artifacts/{{item.key}}" target="_blank">link</a></p>
                     <p>Crawled: {{item.timestamp|date:"medium"}}</p>
                     <p>Imported: {{item.imported|date:"medium"}}</p>
                     <p>Attributes:</p>
